@@ -16,9 +16,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
       perspective: 1000px;
+      padding: 20px 0;
     }
     .ticket-container {
       width: 300px;
@@ -43,18 +44,20 @@
     }
     /* 展開後卡片尺寸（桌機版） */
     .ticket-container.unfolded {
-      width: 420px;
-      height: 600px;
+      width: 90%;
+      max-width: 420px;
+      height: auto;
+      min-height: 600px;
     }
     /* 響應式調整：手機裝置 */
     @media (max-width: 480px) {
       .ticket-container {
-        width: 90%;
-        height: auto;
+        width: 95%;
+        max-width: 340px;
       }
       .ticket-container.unfolded {
-        width: 90%;
-        height: 80vh;
+        width: 95%;
+        max-width: 340px;
       }
     }
     .ticket-front, .ticket-back {
@@ -80,6 +83,8 @@
       padding: 25px;
       overflow-y: auto;
       transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
     }
     .ticket-container.unfolded .ticket-front {
       transform: rotateY(180deg);
@@ -103,6 +108,7 @@
     .ticket-body {
       border-top: 2px dashed #ccc;
       padding-top: 20px;
+      flex-grow: 1;
     }
     .ticket-detail {
       margin-bottom: 12px;
@@ -121,8 +127,14 @@
       font-size: 18px;
       color: #ff1493;
       text-align: center;
-      min-height: 50px;
-      line-height: 1.5;
+      line-height: 1.6;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .greeting p {
+      margin-bottom: 10px;
     }
 
     /* Floating elements */
@@ -159,7 +171,7 @@
 <body>
   <div class="ticket-container" onclick="toggleTicket(event)">
     <div class="ticket-front">
-      <h2>查看電子機票禮物卡</h2>
+      <h2>點擊查看電子機票禮物卡</h2>
     </div>
     <div class="ticket-back">
       <div class="ticket-header">
@@ -277,8 +289,8 @@
 
     function showGreeting() {
       const greetingEl = document.getElementById('greeting');
-      // 以 <br> 換行顯示全部祝福語
-      greetingEl.innerHTML = greetings.join("<br>");
+      // 使用 <p> 標籤換行顯示全部祝福語
+      greetingEl.innerHTML = greetings.map(greeting => `<p>${greeting}</p>`).join('');
     }
 
     // Toggle ticket
