@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>電子賀卡 - 電子機票</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #FFF0F5, #FFE4E1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+    .ticket-container {
+      width: 300px;
+      height: 150px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.6s ease;
+      transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+    .ticket-container.shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    .ticket-container.unfolded {
+      width: 380px;
+      height: 500px;
+    }
+    .ticket-front, .ticket-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.6s ease;
+    }
+    .ticket-front {
+      background: linear-gradient(135deg, #f6d5f7, #fbe9d7);
+      flex-direction: column;
+      z-index: 2;
+    }
+    .ticket-back {
+      background: white;
+      z-index: 1;
+      padding: 25px;
+      display: block;
+      overflow-y: auto;
+      transform: rotateY(180deg);
+    }
+    .ticket-container.unfolded .ticket-front {
+      transform: rotateY(180deg);
+    }
+    .ticket-container.unfolded .ticket-back {
+      transform: rotateY(0);
+    }
+    .ticket-front h2 {
+      color: #ff69b4;
+      font-size: 24px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .ticket-body {
+      border-top: 2px dashed #ccc;
+      padding-top: 20px;
+    }
+    .ticket-detail {
+      margin-bottom: 12px;
+      font-size: 16px;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+    }
+    .ticket-detail strong {
+      color: #ff1493;
+      min-width: 100px;
+      display: inline-block;
+    }
+    .greeting {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ff1493;
+      text-align: center;
+      min-height: 50px;
+    }
+
+    /* Floating elements */
+    .floating-element {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.6;
+      top: -50px;
+      animation: float-down linear infinite;
+    }
+    .flower {
+      font-size: 30px;
+    }
+    .snowflake {
+      font-size: 20px;
+      color: rgba(255,255,255,0.7);
+    }
+    @keyframes float-down {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* Star Burst Effect */
+    .star-burst {
+      position: fixed;
+      pointer-events: none;
+      font-size: 20px;
+      opacity: 1;
+      z-index: 100;
+      transition: all 0.8s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="ticket-container" onclick="toggleTicket(event)">
+    <div class="ticket-front">
+      <h2>點擊查看禮物</h2>
+    </div>
+    <div class="ticket-back">
+      <div class="ticket-header" style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #ff69b4;">電子機票</h1>
+      </div>
+      <div class="ticket-body">
+        <div class="ticket-detail">
+          <strong>航班號:</strong> <span>AB1234</span>
+        </div>
+        <div class="ticket-detail">
+          <strong>起飛:</strong> <span>2025-04-01 10:00</span>
+        </div>
+        <div class="ticket-detail">
+          <strong>抵達:</strong> <span>2025-04-01 14:00</span>
+        </div>
+        <div class="ticket-detail">
+          <strong>出發地:</strong> <span>台北</span>
+        </div>
+        <div class="ticket-detail">
+          <strong>目的地:</strong> <span>東京</span>
+        </div>
+        <div class="greeting" id="greeting"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Floating elements
+    function createFloatingElements() {
+      const flowers = ['🌸', '🌺', '🌷', '🌹'];
+      const snowflakes = ['❄️', '✿', '❁', '✾'];
+      
+      function createFloatingElement(elements, className) {
+        const element = document.createElement('div');
+        element.textContent = elements[Math.floor(Math.random() * elements.length)];
+        element.classList.add('floating-element', className);
+        
+        element.style.left = `${Math.random() * 100}%`;
+        element.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        
+        document.body.appendChild(element);
+      }
+
+      for (let i = 0; i < 10; i++) {
+        createFloatingElement(flowers, 'flower');
+        createFloatingElement(snowflakes, 'snowflake');
+      }
+    }
+
+    // Star Burst Effect
+    function createStarBurst(x, y) {
+      const stars = ['✨', '🌟', '⭐', '💫'];
+      const starCount = 20;
+      const gravity = 0.2;
+
+      for (let i = 0; i < starCount; i++) {
+        const starBurst = document.createElement('div');
+        starBurst.classList.add('star-burst');
+        
+        starBurst.textContent = stars[Math.floor(Math.random() * stars.length)];
+        
+        const angle = Math.random() * Math.PI * 2;
+        const initialVelocity = Math.random() * 200 + 100;
+        
+        starBurst.style.left = `${x}px`;
+        starBurst.style.top = `${y}px`;
+        
+        starBurst.style.transform = 'scale(1)';
+        starBurst.style.opacity = '1';
+        
+        document.body.appendChild(starBurst);
+        
+        let time = 0;
+        const animate = () => {
+          time += 0.05;
+          
+          const newX = x + Math.cos(angle) * initialVelocity * time;
+          const newY = y + Math.sin(angle) * initialVelocity * time + 0.5 * gravity * time * time;
+          
+          starBurst.style.left = `${newX}px`;
+          starBurst.style.top = `${newY}px`;
+          
+          starBurst.style.opacity = Math.max(0, 1 - time * 0.5);
+          starBurst.style.transform = `scale(${Math.max(0, 1 - time * 0.5)})`;
+          
+          if (newY > window.innerHeight || newX < 0 || newX > window.innerWidth || parseFloat(starBurst.style.opacity) <= 0) {
+            document.body.removeChild(starBurst);
+            return;
+          }
+          
+          requestAnimationFrame(animate);
+        };
+        
+        animate();
+      }
+    }
+
+    // Greeting logic
+    const greetings = [
+      "祝你旅途愉快！",
+      "一路平安，期待你的好消息！",
+      "願你飛得更高，夢想成真！",
+      "享受這段美好的旅程吧！",
+      "願陽光伴你同行，微風為你護航！"
+    ];
+
+    function showGreeting() {
+      const greetingEl = document.getElementById('greeting');
+      const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+      greetingEl.textContent = "";
+      let index = 0;
+      
+      const interval = setInterval(() => {
+        if (index < randomGreeting.length) {
+          greetingEl.textContent += randomGreeting[index];
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+
+    // Toggle ticket
+    function toggleTicket(event) {
+      const ticket = document.querySelector('.ticket-container');
+      
+      // Create star burst at click position
+      createStarBurst(event.clientX, event.clientY);
+      
+      // Add shake effect
+      ticket.classList.add('shake');
+      
+      // Delayed ticket opening
+      setTimeout(() => {
+        ticket.classList.remove('shake');
+        ticket.classList.toggle('unfolded');
+        
+        // Show greeting when ticket is unfolded
+        if (ticket.classList.contains('unfolded')) {
+          showGreeting();
+        }
+      }, 500);
+    }
+
+    // Initialize floating elements
+    createFloatingElements();
+
+    // Continuously replenish floating elements
+    setInterval(createFloatingElements, 10000);
+  </script>
+</body>
+</html>
