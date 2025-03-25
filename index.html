@@ -41,9 +41,10 @@
       10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
       20%, 40%, 60%, 80% { transform: translateX(5px); }
     }
+    /* 展開後卡片尺寸更大 */
     .ticket-container.unfolded {
-      width: 380px;
-      height: 500px;
+      width: 420px;
+      height: 600px;
     }
     .ticket-front, .ticket-back {
       position: absolute;
@@ -59,12 +60,13 @@
       background: linear-gradient(135deg, #f6d5f7, #fbe9d7);
       flex-direction: column;
       z-index: 2;
+      padding: 20px;
+      text-align: center;
     }
     .ticket-back {
       background: white;
       z-index: 1;
       padding: 25px;
-      display: block;
       overflow-y: auto;
       transform: rotateY(180deg);
     }
@@ -78,6 +80,14 @@
       color: #ff69b4;
       font-size: 24px;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .ticket-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .ticket-header h1 {
+      color: #ff69b4;
+      font-size: 28px;
     }
     .ticket-body {
       border-top: 2px dashed #ccc;
@@ -140,30 +150,32 @@
       <h2>點擊查看電子機票禮物卡</h2>
     </div>
     <div class="ticket-back">
-      <div class="ticket-header" style="text-align: center; margin-bottom: 20px;">
-        <h1 style="color: #ff69b4;">電子機票</h1>
+      <div class="ticket-header">
+        <h1>電子機票</h1>
       </div>
       <div class="ticket-body">
          <div class="ticket-detail">
-          <strong>訂單號:</strong> <span>520326</span>
-        <div class="ticket-detail">
-          <strong>姓名:</strong> <span>YUFANG CHEN</span>
-        <div class="ticket-detail">
-          <strong>航班號:</strong> <span>ZYC520CYF</span>
-        </div>
-        <div class="ticket-detail">
-          <strong>起飛:</strong> <span>2026全年使用</span>
-        </div>
-        <div class="ticket-detail">
-          <strong>抵達:</strong> <span>2026全年使用</span>
-        </div>
-        <div class="ticket-detail">
-          <strong>出發地:</strong> <span>台北TAIPEI</span>
-        </div>
-        <div class="ticket-detail">
-          <strong>目的地:</strong> <span>東京TOKYO</span>
-        </div>
-        <div class="greeting" id="greeting"></div>
+           <strong>訂單號:</strong> <span>520326</span>
+         </div>
+         <div class="ticket-detail">
+           <strong>姓名:</strong> <span>YUFANG CHEN</span>
+         </div>
+         <div class="ticket-detail">
+           <strong>航班號:</strong> <span>ZYC520CYF</span>
+         </div>
+         <div class="ticket-detail">
+           <strong>起飛:</strong> <span>20260101-1231</span>
+         </div>
+         <div class="ticket-detail">
+           <strong>抵達:</strong> <span>20260101-1231</span>
+         </div>
+         <div class="ticket-detail">
+           <strong>出發地:</strong> <span>台北 TAIPEI</span>
+         </div>
+         <div class="ticket-detail">
+           <strong>目的地:</strong> <span>東京 TOKYO</span>
+         </div>
+         <div class="greeting" id="greeting"></div>
       </div>
     </div>
   </div>
