@@ -41,10 +41,21 @@
       10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
       20%, 40%, 60%, 80% { transform: translateX(5px); }
     }
-    /* 展開後卡片尺寸更大 */
+    /* 展開後卡片尺寸（桌機版） */
     .ticket-container.unfolded {
       width: 420px;
       height: 600px;
+    }
+    /* 響應式調整：手機裝置 */
+    @media (max-width: 480px) {
+      .ticket-container {
+        width: 90%;
+        height: auto;
+      }
+      .ticket-container.unfolded {
+        width: 90%;
+        height: 80vh;
+      }
     }
     .ticket-front, .ticket-back {
       position: absolute;
