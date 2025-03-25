@@ -122,6 +122,7 @@
       color: #ff1493;
       text-align: center;
       min-height: 50px;
+      line-height: 1.5;
     }
 
     /* Floating elements */
@@ -158,7 +159,7 @@
 <body>
   <div class="ticket-container" onclick="toggleTicket(event)">
     <div class="ticket-front">
-      <h2>點擊查看電子機票禮物卡</h2>
+      <h2>查看電子機票禮物卡</h2>
     </div>
     <div class="ticket-back">
       <div class="ticket-header">
@@ -262,7 +263,7 @@
       }
     }
 
-    // Greeting logic
+    // Greeting logic：一次性顯示全部祝福語
     const greetings = [
       "親愛的陳郁芳",
       "這一段時間辛苦妳了",
@@ -276,18 +277,8 @@
 
     function showGreeting() {
       const greetingEl = document.getElementById('greeting');
-      const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-      greetingEl.textContent = "";
-      let index = 0;
-      
-      const interval = setInterval(() => {
-        if (index < randomGreeting.length) {
-          greetingEl.textContent += randomGreeting[index];
-          index++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 100);
+      // 以 <br> 換行顯示全部祝福語
+      greetingEl.innerHTML = greetings.join("<br>");
     }
 
     // Toggle ticket
@@ -305,7 +296,7 @@
         ticket.classList.remove('shake');
         ticket.classList.toggle('unfolded');
         
-        // Show greeting when ticket is unfolded
+        // 當卡片展開時，直接顯示所有祝福語
         if (ticket.classList.contains('unfolded')) {
           showGreeting();
         }
