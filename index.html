@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電子賀卡 - 電子機票</title>
+  <title>郁芳的生日禮 - 前往東京的電子機票</title>
   <style>
     * {
       margin: 0;
@@ -137,27 +137,31 @@
 <body>
   <div class="ticket-container" onclick="toggleTicket(event)">
     <div class="ticket-front">
-      <h2>點擊查看禮物</h2>
+      <h2>點擊查看電子機票禮物卡</h2>
     </div>
     <div class="ticket-back">
       <div class="ticket-header" style="text-align: center; margin-bottom: 20px;">
         <h1 style="color: #ff69b4;">電子機票</h1>
       </div>
       <div class="ticket-body">
+         <div class="ticket-detail">
+          <strong>訂單號:</strong> <span>520326</span>
         <div class="ticket-detail">
-          <strong>航班號:</strong> <span>AB1234</span>
+          <strong>姓名:</strong> <span>YUFANG CHEN</span>
+        <div class="ticket-detail">
+          <strong>航班號:</strong> <span>ZYC520CYF</span>
         </div>
         <div class="ticket-detail">
-          <strong>起飛:</strong> <span>2025-04-01 10:00</span>
+          <strong>起飛:</strong> <span>2026全年使用</span>
         </div>
         <div class="ticket-detail">
-          <strong>抵達:</strong> <span>2025-04-01 14:00</span>
+          <strong>抵達:</strong> <span>2026全年使用</span>
         </div>
         <div class="ticket-detail">
-          <strong>出發地:</strong> <span>台北</span>
+          <strong>出發地:</strong> <span>台北TAIPEI</span>
         </div>
         <div class="ticket-detail">
-          <strong>目的地:</strong> <span>東京</span>
+          <strong>目的地:</strong> <span>東京TOKYO</span>
         </div>
         <div class="greeting" id="greeting"></div>
       </div>
@@ -237,11 +241,14 @@
 
     // Greeting logic
     const greetings = [
-      "祝你旅途愉快！",
-      "一路平安，期待你的好消息！",
-      "願你飛得更高，夢想成真！",
-      "享受這段美好的旅程吧！",
-      "願陽光伴你同行，微風為你護航！"
+      "親愛的陳郁芳",
+      "這一段時間辛苦妳了",
+      "很期待和寶貝與米茶在高雄的新生活",
+      "明年我們再好好的去玩日本玩",
+      "在我心裡妳永遠都是最棒的",
+      "新的一年希望寶貝一直掛著世界最美的微笑",
+      "寶貝生日快樂!",
+      "愛妳的鄭宇翔"
     ];
 
     function showGreeting() {
